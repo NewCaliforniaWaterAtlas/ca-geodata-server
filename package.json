@@ -3,6 +3,10 @@
   "version": "0.0.1",
   "description": "geodata server for NCWA",
   "main": "server.js",
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
