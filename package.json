@@ -1,0 +1,15 @@
+{
+  "name": "ca-geoservice",
+  "version": "0.0.1",
+  "description": "geodata server for NCWA",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "@videmsky",
+  "license": "BSD",
+  "dependencies": {
+    "tilesplash": "~1.2.0",
+    "forever": "~0.11.1"
+  }
+}
