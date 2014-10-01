@@ -25,7 +25,7 @@ app.layer('gwlall', corsMiddleware, function(tile, render){
 
 app.layer('gwlfiltered', corsMiddleware, function(tile, render){
 	this.cache(1000 * 60 * 60 * 24); //cache for one day
-  render('SELECT m.casgem_station_id, m.rate, m.basin_name, ST_AsGeoJSON(m.the_geom) as the_geom_geojson FROM gwl_rates_merged m WHERE m.rate >= 0.25');
+  render('SELECT m.casgem_station_id, m.rate, m.basin_name, ST_AsGeoJSON(m.the_geom) as the_geom_geojson FROM gwl_rates_merged m WHERE m.rate >= 1.0');
 });
 
 app.server.listen(3000);
