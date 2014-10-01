@@ -26,10 +26,3 @@ app.layer('gwlfiltered', corsMiddleware, function(tile, render){
 });
 
 app.server.listen(3000);
-
-
-app.layer('slowLayer', function(tile, render){
-  this.cache(1000 * 60 * 60 * 24 * 30); //cache for 30 days
-
-  render.queryFile('slowQuery.sql');
-});
