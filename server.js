@@ -17,6 +17,7 @@ app.layer('countiesall', corsMiddleware, function(tile, render){
 });
 
 app.layer('gwlall', corsMiddleware, function(tile, render){
+  this.cache(1000 * 60 * 60 * 24); //cache for one day
   render('SELECT m.casgem_station_id, m.rate, m.basin_name, ST_AsGeoJSON(m.the_geom) as the_geom_geojson FROM gwl_rates_merged m');
 });
 
@@ -25,3 +26,10 @@ app.layer('gwlfiltered', corsMiddleware, function(tile, render){
 });
 
 app.server.listen(3000);
+
+
+app.layer('slowLayer', function(tile, render){
+  this.cache(1000 * 60 * 60 * 24 * 30); //cache for 30 days
+
+  render.queryFile('slowQuery.sql');
+});
