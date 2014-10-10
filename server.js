@@ -1,6 +1,9 @@
 var Tilesplash = require('tilesplash');
+var credentials = require('./credentials');
 
-var app = new Tilesplash('postgres://watermaster:c3ntralva113ypr0j!@ncwageoservice.ccts9i164ms9.us-east-1.rds.amazonaws.com/ncwadb');
+var app = new Tilesplash("postgres://" + credentials.user + ":" + credentials.passwd + "@ncwageoservice.ccts9i164ms9.us-east-1.rds.amazonaws.com/ncwadb");
+
+var port = process.env.PORT || 3000;
 
 var corsMiddleware = function(req, res, tile, next){
   res.header("Access-Control-Allow-Origin", "*");
@@ -28,4 +31,5 @@ app.layer('gwlfiltered', corsMiddleware, function(tile, render){
   render('SELECT m.casgem_station_id, m.rate, m.basin_name, ST_AsGeoJSON(m.the_geom) as the_geom_geojson FROM gwl_rates_merged m WHERE m.rate >= 1.0');
 });
 
-app.server.listen(3000);
+app.server.listen(port);
+console.log("App listening on port " + port);
