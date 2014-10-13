@@ -11,6 +11,8 @@ module.exports = function (app) {
     next();
   });
 
+// 'SELECT m.casgem_station_id, m.rate, m.basin_name, ST_AsGeoJSON(m.the_geom) as the_geom_geojson FROM gwl_rates_merged m'
+
   app.get('/counties/:id', function (req, res, next) {
 
     var client = new pg.Client(app.conString);
@@ -31,14 +33,7 @@ module.exports = function (app) {
 
   });
 
-
-
-  /* feature retrieval */
-
-  /**
-   * retrieve all features (this could be really slow and is probably not what you really want to do)
-   */
-  app.get('/vector/:schema/:table/:geom', function (req, res, next) {
+  app.get('/api/v1/:table/:geom', function (req, res, next) {
     
     var client = new pg.Client(app.conString);
     var geom = req.params.geom.toLowerCase();
@@ -47,9 +42,8 @@ module.exports = function (app) {
       return;
     }
     
-    var schemaname = req.params.schema;
     var tablename = req.params.table;
-    var fullname = schemaname + "." + tablename;
+    var fullname = tablename;
     client.connect();
     var crsobj = {
       "type" : "name",
@@ -62,7 +56,7 @@ module.exports = function (app) {
     idformat = idformat.toUpperCase();
     var spatialcol = "";
     
-    var meta = client.query("select * from geometry_columns where f_table_name = '" + tablename + "' and f_table_schema = '" + schemaname + "';");
+    var meta = client.query("SELECT * FROM geometry_columns WHERE f_table_name = '" + tablename + "' ;");
     
     meta.on('row', function (row) {
       var query;
